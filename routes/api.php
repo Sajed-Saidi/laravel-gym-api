@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Api\TrainerController;
+use App\Http\Controllers\Api\TrainingClassController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +23,9 @@ Route::middleware('guest')->group(function () {
     Route::get('/plans', [PlanController::class, 'index']);
 
     Route::get('/plans/{plan}', [PlanController::class, 'show']);
+
+    Route::get('/training-classes', [TrainingClassController::class, 'index']);
+    Route::get('/trainers', [TrainerController::class, 'index']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -28,4 +34,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('/subscriptions', SubscriptionController::class)
         ->except('index', 'update');
+
+    Route::get('/bookings', [BookingController::class, 'index']);
+    Route::post('/bookings', [BookingController::class, 'store']);
+    Route::put('/bookings/{booking}', [BookingController::class, 'update']);
 });
