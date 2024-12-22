@@ -18,6 +18,7 @@ class BookingResource extends JsonResource
             'id' => $this->id,
             'userId' => $this->user_id,
             'trainingClassId' => $this->training_class_id,
+            'trainingClass' => new TrainingClassResource($this->trainingClass),
             'bookingDate' => $this->booking_date,
             'status' => $this->status,
             'createdAt' => $this->created_at->toDateTimeString(),

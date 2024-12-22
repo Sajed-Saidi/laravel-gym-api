@@ -15,7 +15,8 @@ class TrainingClass extends Model
         'name',
         'description',
         'schedule',
-        'max_participants'
+        'category',
+        'image'
     ];
 
     protected $casts = [

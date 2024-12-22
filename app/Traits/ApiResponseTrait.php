@@ -22,14 +22,6 @@ trait ApiResponseTrait
     {
         $message = $message ?? __('messages.error_occurred');
 
-        // if (config('app.env') !== 'production') {
-        //     Log::error('API Error', [
-        //         'status' => $status,
-        //         'message' => $message,
-        //         'data' => $data,
-        //     ]);
-        // }
-
         return response()->json([
             'status' => 'error',
             'message' => $message,

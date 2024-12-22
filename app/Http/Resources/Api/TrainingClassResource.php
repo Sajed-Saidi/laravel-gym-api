@@ -16,11 +16,12 @@ class TrainingClassResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'trainerId' => $this->trainer_id,
-            'trainerName' => $this->trainer->user->name,
+            'trainer' => new TrainerResource($this->whenLoaded('trainer')),
             'name' => $this->name,
             'description' => $this->description,
             'schedule' => $this->schedule,
+            'image' => \env("APP_URL", "http://127.0.0.1:8000") . "/storage/" .  $this->image,
+            'category' => $this->category,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];

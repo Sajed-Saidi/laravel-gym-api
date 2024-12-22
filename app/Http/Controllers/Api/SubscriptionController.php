@@ -21,7 +21,6 @@ class SubscriptionController extends Controller
             'plan_id' => 'required|exists:plans,id',
             'method' => 'required|string|in:credit_card,cash',
         ]);
-
         $validatedData['user_id'] = auth()->id();
 
         $existingSubscription = Subscription::where('user_id', $validatedData['user_id'])
@@ -37,6 +36,8 @@ class SubscriptionController extends Controller
         }
 
         $plan = Plan::findOrFail($validatedData['plan_id']);
+
+        $validatedData['status'] = 'active';
         $validatedData['amount'] = $plan->price;
         $validatedData['start_date'] = now();
         $validatedData['end_date'] = now()->addDays($plan->duration_in_days);
@@ -44,9 +45,7 @@ class SubscriptionController extends Controller
         $subscription = Subscription::create($validatedData);
 
         return $this->success(
-            [
-                'subscription' => new SubscriptionResource($subscription),
-            ],
+            new SubscriptionResource($subscription),
             'Subscribed successfully!',
             201
         );
@@ -61,9 +60,7 @@ class SubscriptionController extends Controller
             return $this->error("", "Unauthorized user!", 401);
         }
         return $this->success(
-            [
-                'subscription' => new SubscriptionResource($subscription)
-            ]
+            new SubscriptionResource($subscription)
         );
     }
 

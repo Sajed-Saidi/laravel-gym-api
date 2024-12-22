@@ -18,11 +18,11 @@ class PlanResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
-            'duration_in_days' => $this->duration_in_days,
+            'durationInDays' => $this->duration_in_days,
             'features' => $this->features,
             'status' => $this->status,
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            'createdAt' => $this->created_at->toDateTimeString(),
+            'updatedAt' => $this->updated_at->toDateTimeString(),
         ];
     }
 }

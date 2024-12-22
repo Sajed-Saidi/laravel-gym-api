@@ -15,9 +15,7 @@ class BookingController extends Controller
     public function index()
     {
         return $this->success(
-            [
-                'bookings' => BookingResource::collection(auth()->user()->bookings)
-            ]
+            BookingResource::collection(auth()->user()->bookings)
         );
     }
 
@@ -25,9 +23,9 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
 
-        return $this->success([
-            'booking' => new BookingResource($booking)
-        ]);
+        return $this->success(
+            new BookingResource($booking)
+        );
     }
 
     public function store(Request $request)
@@ -57,9 +55,7 @@ class BookingController extends Controller
         $booking = Booking::create($validatedData);
 
         return $this->success(
-            [
-                'booking' => new BookingResource($booking)
-            ],
+            new BookingResource($booking),
             'Created Successfully!',
             201
         );
@@ -74,9 +70,7 @@ class BookingController extends Controller
         ]);
 
         return $this->success(
-            [
-                'booking' => new BookingResource($booking)
-            ],
+            new BookingResource($booking),
             "Cancelled successfully!"
         );
     }

@@ -46,24 +46,43 @@ class TrainerResource extends Resource
                             ->searchable()
                             ->required(),
 
-                        Forms\Components\TextInput::make('specialties')
+                        Forms\Components\Textarea::make('specialties')
+                            ->maxLength(255)
+                            ->rows(4)
                             ->label('Specialties')
                             ->placeholder('E.g., Yoga, Cardio')
                             ->required(),
-                    ])
-                ]),
-                Forms\components\Group::make()->schema([
-                    Forms\Components\Section::make()->schema([
-                        Forms\Components\Textarea::make('certifications')
-                            ->label('Certifications')
-                            ->placeholder('E.g., Certified Yoga Instructor')
-                            ->columnSpan(2),
 
                         Forms\Components\TextInput::make('rating')
                             ->numeric()
                             ->default(0)
                             ->hint('Calculated based on user feedback.'),
                     ])
+                ]),
+                Forms\components\Group::make()->schema([
+                    Forms\Components\Section::make()->schema([
+
+                        Forms\Components\Repeater::make('additional_info')
+                            ->schema([
+                                Forms\Components\TextInput::make('key')
+                                    ->label('Key')
+                                    ->required()
+                                    ->columnSpan(1),
+                                Forms\Components\TextInput::make('value')
+                                    ->label('Value')
+                                    ->required()
+                                    ->columnSpan(1),
+                            ])
+                            ->collapsible()
+                            ->columns(2)
+                            ->defaultItems(1),
+
+                        Forms\Components\FileUpload::make('image')
+                            ->required()
+                            ->image()
+                            ->maxSize(2048)
+                            ->acceptedFileTypes(['image/*'])
+                    ]),
                 ])
             ]);
     }
@@ -74,8 +93,10 @@ class TrainerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('user.name')->searchable()->label('User'),
-                Tables\Columns\TextColumn::make('specialties')->searchable(),
-                Tables\Columns\TextColumn::make('certifications')->searchable(),
+                Tables\Columns\TextColumn::make('specialties')
+                    ->limit(30)
+                    ->searchable(),
+                Tables\Columns\ImageColumn::make('image')->circular(),
                 Tables\Columns\TextColumn::make('rating')->badge()->searchable(),
 
             ])

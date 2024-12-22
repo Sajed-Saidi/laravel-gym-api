@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('trainers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('specialties');
+            $table->string('specialties', 255);
             $table->string('certifications')->nullable();
             $table->decimal('rating', 3, 2)->default(0.00);
             $table->timestamps();

@@ -16,17 +16,17 @@ class SubscriptionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'plan_id' => $this->plan_id,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
+            'userId' => $this->user_id,
+            'plan' => $this->plan,
+            'startDate' => $this->start_date,
+            'endDate' => $this->end_date,
             'amount' => $this->amount,
             'method' => $this->method,
-            'payment_date' => $this->payment_date,
+            'paymentDate' => $this->payment_date,
             'status' => $this->status,
-            'payment_status' => $this->payment_status,
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            'paymentStatus' => $this->payment_status,
+            'createdAt' => $this->created_at->toDateTimeString(),
+            'updatedAt' => $this->updated_at->toDateTimeString(),
         ];
     }
 }

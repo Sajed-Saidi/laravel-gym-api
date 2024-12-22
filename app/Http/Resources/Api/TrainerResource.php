@@ -16,10 +16,10 @@ class TrainerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'userId' => $this->user_id,
-            'user' => $this->user,
+            'name' => $this->user->name,
             'specialties' => $this->specialties,
-            'certifications' => $this->certifications,
+            'image' => \env("APP_URL", "http://127.0.0.1:8000") . "/storage/" .  $this->image,
+            'additionalInfo' => $this->additional_info,
             'rating' => $this->rating,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,

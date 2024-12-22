@@ -14,8 +14,13 @@ class Trainer extends Model
     protected $fillable = [
         'user_id',
         'specialties',
-        'certifications',
-        'rating'
+        'rating',
+        'image',
+        'additional_info'
+    ];
+
+    protected $casts = [
+        'additional_info' => 'json',
     ];
 
     public function user(): BelongsTo

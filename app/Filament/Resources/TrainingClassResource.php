@@ -45,12 +45,21 @@ class TrainingClassResource extends Resource
                                 ->label('Class Name')
                                 ->required()
                                 ->columnSpan(1),
+                            Forms\Components\TextInput::make('category')
+                                ->required()
+                                ->columnSpan(1),
 
                             Forms\Components\Textarea::make('description')
                                 ->label('Description')
                                 ->placeholder('Short description about the class')
                                 ->columnSpan(2)
                                 ->required(),
+
+                            Forms\Components\FileUpload::make('image')
+                                ->required()
+                                ->image()
+                                ->maxSize(2048)
+                                ->acceptedFileTypes(['image/*'])
                         ]
                     )
                 ]),
@@ -110,7 +119,7 @@ class TrainingClassResource extends Resource
                                 ->defaultItems(1)
                                 ->columns(3)
                                 ->reactive()
-                                ->afterStateUpdated(function ($state, callable $set) {
+                                ->afterStateUpdated(function ($state, $record, callable $set) {
                                     if ($state) {
                                         foreach ($state as $index => $item) {
                                             if ($item['day'] && $item['start_time'] && $item['end_time']) {
@@ -133,6 +142,9 @@ class TrainingClassResource extends Resource
                                                     AND jt.start_time < '$end_time'
                                                     AND jt.end_time > '$start_time'
                                                 ";
+                                                if ($record) {
+                                                    $query .= " AND training_classes.id != " . $record->id;
+                                                }
 
                                                 $results = DB::select(($query));
                                                 if ($results) {
@@ -163,9 +175,12 @@ class TrainingClassResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('name')->label('Class Name')->sortable(),
+                Tables\Columns\TextColumn::make('id')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('name')->label('Class Name')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('category')->badge()->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('trainer.user.name')->label('Trainer'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->circular(),
 
             ])
             ->filters([

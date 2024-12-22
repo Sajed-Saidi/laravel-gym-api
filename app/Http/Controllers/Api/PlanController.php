@@ -15,16 +15,14 @@ class PlanController extends Controller
     {
         $plans = Plan::where('status', 'active')->get();
         return $this->success(
-            [
-                'plans' => PlanResource::collection(new PlanResource($plans)),
-            ]
+            PlanResource::collection(new PlanResource($plans)),
         );
     }
 
     public function show(Plan $plan)
     {
-        return $this->success([
-            'plan' => new PlanResource($plan)
-        ]);
+        return $this->success(
+            new PlanResource($plan)
+        );
     }
 }

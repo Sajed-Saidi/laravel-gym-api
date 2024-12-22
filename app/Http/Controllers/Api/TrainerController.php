@@ -14,9 +14,7 @@ class TrainerController extends Controller
     public function index()
     {
         return $this->success(
-            [
-                'trainers' => TrainerResource::collection(Trainer::all())
-            ]
+            TrainerResource::collection(Trainer::all())
         );
     }
 }

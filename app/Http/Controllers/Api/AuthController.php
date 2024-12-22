@@ -22,6 +22,7 @@ class AuthController extends Controller
     {
         $validatedData = $request->validated();
 
+        $validatedData['role'] = 'member';
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         $user = User::create($validatedData);
@@ -31,7 +32,7 @@ class AuthController extends Controller
                 'user' => new UserResource($user),
                 'token' => $user->createToken('Registered User')->plainTextToken
             ],
-            'User created successfully!',
+            'Registered Successfully!',
             201
         );
     }
@@ -85,6 +86,14 @@ class AuthController extends Controller
                 'users' => UserResource::collection($users),
             ],
             "Users Found!"
+        );
+    }
+
+    public function fetchUser()
+    {
+        return $this->success(
+            new UserResource(auth()->user()),
+            "User Fetched Successfully!",
         );
     }
 

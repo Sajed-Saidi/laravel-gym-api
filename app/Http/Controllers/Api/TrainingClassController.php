@@ -15,9 +15,16 @@ class TrainingClassController extends Controller
     public function index()
     {
         return $this->success(
-            [
-                'trainingClasses' => TrainingClassResource::collection(TrainingClass::all())
-            ],
+            TrainingClassResource::collection(TrainingClass::with('trainer')->get())
         );
+    }
+
+    public function show(string $id)
+    {
+        $training_class = TrainingClass::with('trainer')->findOrFail($id);
+        return
+            $this->success(
+                new TrainingClassResource($training_class)
+            );
     }
 }
