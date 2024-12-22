@@ -19,7 +19,6 @@ return new class extends Migration
             $table->timestamp('end_date');
             $table->decimal('amount', 10, 2);
             $table->string('method')->comment('credit_card|cash');
-            $table->timestamp('payment_date')->useCurrent();
             $table->string('status')->comment('active|expired')->default('active');
             $table->timestamps();
         });
